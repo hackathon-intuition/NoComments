@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,9 +33,64 @@ public class AddProjectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project);
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this);
+
+        final ArrayList<String> projectNames = new ArrayList();
+       // Parse.enableLocalDatastore(this);
+        if(getIntent().getBooleanExtra("firstLaunch",true)){
+            Parse.initialize(this);
+        }
 //        ParseLoginBuilder builder = new ParseLoginBuilder(AddProjectActivity.this);
+//        startActivityForResult(builder.build(), 0);
+//        testDbConnect();
+
+//        ParseObject taskInfo = new ParseObject("TaskInfo");
+//        taskInfo.put("taskId", 1);
+//        taskInfo.put("taskName", "task1");
+//        taskInfo.put("projectId", 2);
+//        taskInfo.put("projectName", "project2");
+//        taskInfo.saveInBackground();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TaskInfo");
+        query.whereNotEqualTo("projectId",0);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> taskInfoList, ParseException e) {
+                if (e == null) {
+                    for (ParseObject object : taskInfoList) {
+                        projectNames.add((String) object.get("projectName"));
+                    }
+                    Log.d("score", "Retrieved " + taskInfoList.size() + " scores");
+                    String[] projectNames_list = new String[projectNames.size()];
+                    projectNames_list = projectNames.toArray(projectNames_list);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, projectNames_list){
+                        @Override
+                        public View getView(int position, View convertView,
+                                            ViewGroup parent) {
+                            View view =super.getView(position, convertView, parent);
+                            TextView textView=(TextView) view.findViewById(android.R.id.text1);
+            /*YOUR CHOICE OF COLOR*/
+                            textView.setTextColor(Color.BLACK);
+                            return view;
+                        }
+                    };
+                    ListView listView = (ListView) findViewById(R.id.projectList_lv);
+                    listView.setAdapter(adapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(getApplicationContext(),AddTasksActivity.class);
+                            intent.putExtra("projectName",projectNames.get(position));
+                            startActivity(intent);
+                        }
+                    });
+
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
+
+
+//        ParseLoginBuilder builder = new ParseLoginBuilder(AddTasksActivity.this);
 //        startActivityForResult(builder.build(), 0);
 //        testDbConnect();
     }
@@ -60,6 +116,39 @@ public class AddProjectActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void addProjectTextbox(View view){
+//        EditText TaskTextbox = new EditText(this);
+//        LinearLayout textboxLayout = (LinearLayout) findViewById(R.id.linLayout);
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+//        TaskTextbox.setLayoutParams(params);
+////        params.addRule(LinearLayout.BELOW, R.id.title);
+//        textboxLayout.addView(TaskTextbox);
+
+        EditText ProjectTextbox = (EditText)findViewById(R.id.projectTextbox);
+        String projectName = ProjectTextbox.getText().toString();
+//        ParseObject taskInfo = new ParseObject("TaskInfo");
+
+//        taskInfo.put("projectName", projectName);
+//        taskInfo.saveInBackground();
+
+        //refreshPage();
+    }
+
+    public void refreshPage(){
+        Log.d("before","before");
+        Intent intent = new Intent(getApplicationContext(),AddProjectActivity.class);
+        intent.putExtra("firstLaunch",false);
+        startActivity(intent);
+        Log.d("after", "after");
+        this.finish();
+    }
+
+//    public void goToNext(View view){
+//        Intent intent = new Intent(getApplicationContext(),AddTasksActivity.class);
+//        intent.putExtra("projectName",)
+//        startActivity(intent);
+//    }
 
     public void testDbConnect() {
         DbConnect dbConnect = new DbConnect(this);

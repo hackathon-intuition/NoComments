@@ -32,7 +32,7 @@
         <activity android:name=".AddProjectActivity" />
         <activity
             android:name=".AddTasksActivity"
-            android:label="@string/title_activity_add_tasks2" >
+            android:label="@string/title_activity_add_tasks" >
         </activity>
     </application>
 
