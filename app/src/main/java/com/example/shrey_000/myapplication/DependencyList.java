@@ -24,6 +24,5 @@ public class DependencyList {
     public void setDependentTasks(ArrayList dependentTasks) {
         this.dependentTasks = dependentTasks;
     }
-
-
+    
 }
