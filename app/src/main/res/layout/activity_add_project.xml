@@ -16,15 +16,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Project Name"
-            android:id="@+id/textView" />
+            android:text="New Project "
+            android:id="@+id/projectView" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/taskTextbox"
+            android:id="@+id/projectTextbox"
             android:editable="true"
-            android:hint="Task" />
+            android:hint="Task"
+            android:text="Project Name" />
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -34,9 +35,9 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Add Task"
+                android:text="Add Project"
                 android:id="@+id/button"
-                android:onClick="addTaskTextbox" />
+                android:onClick="addProjectTextbox" />
 
             <Button
                 android:layout_width="0dp"
@@ -50,13 +51,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No tasks available"
-            android:id="@+id/textView2" />
+            android:text="Previous Projects"
+            android:id="@+id/projectsView2" />
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/taskList_lv"/>
+            android:id="@+id/projectList_lv"
+            android:choiceMode="none" />
+
+
 
     </LinearLayout>
 
