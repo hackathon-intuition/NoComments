@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -37,12 +38,12 @@ public class AddTasksActivity extends AppCompatActivity {
         }
 
 
-        ParseObject taskInfo = new ParseObject("TaskInfo");
-        taskInfo.put("taskId", 1);
-        taskInfo.put("taskName", "task1");
-        taskInfo.put("projectId", 1);
-        taskInfo.put("projectName", "project1");
-        taskInfo.saveInBackground();
+//        ParseObject taskInfo = new ParseObject("TaskInfo");
+//        taskInfo.put("taskId", 1);
+//        taskInfo.put("taskName", "task1");
+//        taskInfo.put("projectId", 1);
+//        taskInfo.put("projectName", "project1");
+//        taskInfo.saveInBackground();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("TaskInfo");
         query.whereNotEqualTo("projectId",0);
@@ -55,7 +56,7 @@ public class AddTasksActivity extends AppCompatActivity {
                     Log.d("score", "Retrieved " + taskInfoList.size() + " scores");
                     String[] taskNames_list = new String[taskNames.size()];
                     taskNames_list = taskNames.toArray(taskNames_list);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, taskNames_list){
+                    ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,taskNames_list){
                         @Override
                         public View getView(int position, View convertView,
                                             ViewGroup parent) {
@@ -68,7 +69,14 @@ public class AddTasksActivity extends AppCompatActivity {
                     };
                     ListView listView = (ListView) findViewById(R.id.taskList_lv);
                     listView.setAdapter(adapter);
-
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent i = new Intent(getApplicationContext(),AddDependencyActivity.class);
+                            i.putExtra("taskName",taskNames.get(position));
+                            startActivity(i);
+                        }
+                    });
                 } else {
                     Log.d("score", "Error: " + e.getMessage());
                 }

@@ -1,9 +1,12 @@
 package com.example.shrey_000.myapplication;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class AddDependencyActivity extends AppCompatActivity {
 
@@ -11,6 +14,9 @@ public class AddDependencyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_dependency);
+        Intent i = getIntent();
+        i.getSerializableExtra("Name");
+        Log.d("Name","Name in depency");
     }
 
     @Override
