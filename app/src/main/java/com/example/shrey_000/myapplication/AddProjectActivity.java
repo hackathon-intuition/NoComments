@@ -60,7 +60,7 @@ public class AddProjectActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    
+
     public void testDbConnect() {
         DbConnect dbConnect = new DbConnect(this);
 
