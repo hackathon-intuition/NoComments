@@ -1,16 +1,26 @@
 package com.example.shrey_000.myapplication;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ui.ParseLoginBuilder;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this);
+//        ParseLoginBuilder builder = new ParseLoginBuilder(MainActivity.this);
+//        startActivityForResult(builder.build(), 0);
+//        testDbConnect();
     }
 
     @Override
@@ -33,5 +43,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void testDbConnect() {
+        DbConnect dbConnect = new DbConnect(this);
+
     }
 }
