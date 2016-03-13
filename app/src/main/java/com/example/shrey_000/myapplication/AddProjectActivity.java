@@ -127,12 +127,16 @@ public class AddProjectActivity extends AppCompatActivity {
 
         EditText ProjectTextbox = (EditText)findViewById(R.id.projectTextbox);
         String projectName = ProjectTextbox.getText().toString();
+
+        Intent intent = new Intent(getApplicationContext(),AddTasksActivity.class);
+        intent.putExtra("projectName",projectName);
+        startActivity(intent);
 //        ParseObject taskInfo = new ParseObject("TaskInfo");
 
 //        taskInfo.put("projectName", projectName);
 //        taskInfo.saveInBackground();
 
-        //refreshPage();
+//        refreshPage();
     }
 
     public void refreshPage(){
