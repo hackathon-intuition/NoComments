@@ -1,8 +1,8 @@
 package com.example.shrey_000.myapplication;
 
 
-
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -17,6 +17,7 @@ public class CriticalPath {
         HashSet<Task> allTasks = new HashSet<Task>();
 
 //        for(int i=0;i<NOOFTASKS; i++)
+//       
 //        {
 //            allTasks.add(new Task("GetStringFromDB",integer,taskObject/Dependancies));
 //        }
@@ -36,11 +37,21 @@ public class CriticalPath {
 
 
         Task[] result = Task.criticalPath(allTasks);
-
+        //ArrayList <Task> res=new ArrayList<Task>();
 //        for(Task t: allTasks)
 //        {
 //        	System.out.println(Task.getLatest(t));
 //        }
+
+
+//        
+//        for(int i=0;i<result.length;i++)
+//    	{
+//    		result[i].toStringArray().toString();
+//    	}
+//        for(int i=0;i<result.length;i++)
+//        	System.out.println(result[i]);
+//        
 
 
         Task.print(result);
