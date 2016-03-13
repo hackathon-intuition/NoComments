@@ -25,6 +25,14 @@
             android:id="@+id/taskTextbox"
             android:editable="true"
             android:hint="Task" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/daysTextbox"
+            android:editable="true"
+            android:hint="Days Required" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"

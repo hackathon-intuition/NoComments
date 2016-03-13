@@ -26,16 +26,23 @@ import java.util.List;
 
 public class AddTasksActivity extends AppCompatActivity {
 
+    Intent i;
+    String projectName;
+    ArrayList<String> taskNames;
+    ArrayList<String> daysList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tasks);
 
-        final ArrayList<String> taskNames = new ArrayList();
+        taskNames = new ArrayList();
+        i = getIntent();
+        projectName = i.getStringExtra("projectName");
 //        Parse.enableLocalDatastore(this);
-        if(getIntent().getBooleanExtra("firstLaunch",true)){
-            Parse.initialize(this);
-        }
+//        if(getIntent().getBooleanExtra("firstLaunch",true)){
+//            Parse.initialize(this);
+//        }
 
 
 //        ParseObject taskInfo = new ParseObject("TaskInfo");
@@ -46,7 +53,7 @@ public class AddTasksActivity extends AppCompatActivity {
 //        taskInfo.saveInBackground();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("TaskInfo");
-        query.whereNotEqualTo("projectId",0);
+        query.whereEqualTo("projectName", projectName);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> taskInfoList, ParseException e) {
                 if (e == null) {
@@ -73,6 +80,7 @@ public class AddTasksActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent i = new Intent(getApplicationContext(),AddDependencyActivity.class);
+                            i.putExtra("projectName", projectName);
                             i.putExtra("taskName",taskNames.get(position));
                             startActivity(i);
                         }
@@ -120,24 +128,72 @@ public class AddTasksActivity extends AppCompatActivity {
 //        textboxLayout.addView(TaskTextbox);
 
         EditText TaskTextbox = (EditText)findViewById(R.id.taskTextbox);
+        EditText DaysTextbox = (EditText)findViewById(R.id.daysTextbox);
         String taskName = TaskTextbox.getText().toString();
+        String days = DaysTextbox.getText().toString();
+
+
         ParseObject taskInfo = new ParseObject("TaskInfo");
-        taskInfo.put("taskId",2);
-        taskInfo.put("taskName",taskName);
-        taskInfo.put("projectId",1);
-        taskInfo.put("projectName","project1");
+        taskInfo.put("taskName", taskName);
+        taskInfo.put("projectName",projectName);
         taskInfo.saveInBackground();
+
+        ParseObject taskDuration = new ParseObject("TaskDuration");
+        taskDuration.put("taskName",taskName);
+        taskDuration.put("projectName",projectName);
+        taskDuration.put("estimatedDays",days);
+        taskDuration.saveInBackground();
 
         refreshPage();
     }
 
     public void refreshPage(){
-        Log.d("before","before");
-        Intent intent = new Intent(getApplicationContext(),AddTasksActivity.class);
-        intent.putExtra("firstLaunch",false);
-        startActivity(intent);
-        Log.d("after", "after");
-        this.finish();
+//        Log.d("before", "before");
+//        Intent intent = new Intent(getApplicationContext(),AddTasksActivity.class);
+//        intent.putExtra("firstLaunch", false);
+//        this.finish();
+//        startActivity(intent);
+//        Log.d("after", "after");
+//        this.finish();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TaskInfo");
+        query.whereEqualTo("projectName", projectName);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> taskInfoList, ParseException e) {
+                if (e == null) {
+                    for (ParseObject object : taskInfoList) {
+                        taskNames.add((String) object.get("taskName"));
+                    }
+                    Log.d("score", "Retrieved " + taskInfoList.size() + " scores");
+                    String[] taskNames_list = new String[taskNames.size()];
+                    taskNames_list = taskNames.toArray(taskNames_list);
+                    ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,taskNames_list){
+                        @Override
+                        public View getView(int position, View convertView,
+                                            ViewGroup parent) {
+                            View view =super.getView(position, convertView, parent);
+                            TextView textView=(TextView) view.findViewById(android.R.id.text1);
+            /*YOUR CHOICE OF COLOR*/
+                            textView.setTextColor(Color.BLACK);
+                            return view;
+                        }
+                    };
+                    ListView listView = (ListView) findViewById(R.id.taskList_lv);
+                    listView.setAdapter(adapter);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent i = new Intent(getApplicationContext(),AddDependencyActivity.class);
+                            i.putExtra("projectName", projectName);
+                            i.putExtra("taskName",taskNames.get(position));
+                            startActivity(i);
+                        }
+                    });
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });
     }
 
     public void goToNext(View view){
