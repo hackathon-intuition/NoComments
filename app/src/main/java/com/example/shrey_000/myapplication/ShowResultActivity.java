@@ -44,10 +44,10 @@ public class ShowResultActivity extends AppCompatActivity {
     //query.whereNotEqualTo("projectName",0);
     query.whereEqualTo("projectName",projectName);
     query.findInBackground(new FindCallback<ParseObject>() {
-        public void done(List<ParseObject> taskInfoList, ParseException e) {
+        public void done(List<ParseObject> taskDurationList, ParseException e) {
             if (e == null) {
-                for (ParseObject object : taskInfoList) {
-                    projectNames.add((String) object.get("projectName"));
+                for (ParseObject object : taskDurationList) {
+                    taskTimes.add((String) object.get("projectName"));
                 }
                 Log.d("score", "Retrieved " + taskInfoList.size() + " scores");
                 String[] projectNames_list = new String[projectNames.size()];
