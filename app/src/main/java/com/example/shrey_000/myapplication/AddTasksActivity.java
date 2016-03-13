@@ -79,9 +79,9 @@ public class AddTasksActivity extends AppCompatActivity {
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent i = new Intent(getApplicationContext(),AddDependencyActivity.class);
+                            Intent i = new Intent(getApplicationContext(), AddDependencyActivity.class);
                             i.putExtra("projectName", projectName);
-                            i.putExtra("taskName",taskNames.get(position));
+                            i.putExtra("taskName", taskNames.get(position));
                             startActivity(i);
                         }
                     });
@@ -167,12 +167,12 @@ public class AddTasksActivity extends AppCompatActivity {
                     Log.d("score", "Retrieved " + taskInfoList.size() + " scores");
                     String[] taskNames_list = new String[taskNames.size()];
                     taskNames_list = taskNames.toArray(taskNames_list);
-                    ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,taskNames_list){
+                    ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, taskNames_list) {
                         @Override
                         public View getView(int position, View convertView,
                                             ViewGroup parent) {
-                            View view =super.getView(position, convertView, parent);
-                            TextView textView=(TextView) view.findViewById(android.R.id.text1);
+                            View view = super.getView(position, convertView, parent);
+                            TextView textView = (TextView) view.findViewById(android.R.id.text1);
             /*YOUR CHOICE OF COLOR*/
                             textView.setTextColor(Color.BLACK);
                             return view;
@@ -183,9 +183,9 @@ public class AddTasksActivity extends AppCompatActivity {
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent i = new Intent(getApplicationContext(),AddDependencyActivity.class);
+                            Intent i = new Intent(getApplicationContext(), AddDependencyActivity.class);
                             i.putExtra("projectName", projectName);
-                            i.putExtra("taskName",taskNames.get(position));
+                            i.putExtra("taskName", taskNames.get(position));
                             startActivity(i);
                         }
                     });
@@ -197,7 +197,8 @@ public class AddTasksActivity extends AppCompatActivity {
     }
 
     public void goToNext(View view){
-        Intent intent = new Intent(getApplicationContext(),AddDependencyActivity.class);
+        Intent intent = new Intent(getApplicationContext(),ShowResultActivity.class);
+        intent.putExtra("projectName",projectName);
         startActivity(intent);
     }
 
