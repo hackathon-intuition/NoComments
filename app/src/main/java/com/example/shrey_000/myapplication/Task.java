@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -249,8 +251,51 @@ public class Task {
 
 
     public static void print(Task[] tasks) {
+//    	 ArrayList <Task> result=new ArrayList<Task>();
         System.out.format(CriticalPath.format, "Task", "ES", "EF", "LS", "LF", "Slack", "Critical?");
+
+        ArrayList<String> taskNames=new ArrayList <String>();
+        ArrayList<Integer> ES=new ArrayList <Integer>();
+        ArrayList<Integer> LS=new ArrayList <Integer>();
+        ArrayList<Integer> EF=new ArrayList <Integer>();
+        ArrayList<Integer> LF=new ArrayList <Integer>();
+        ArrayList<ArrayList<String>> result=new ArrayList<ArrayList <String>>();
+
+        ArrayList<Task> tss=new ArrayList<Task>();
+//    	ArrayList<>
+        //,ES,EF,LS,LF;
         for (Task t : tasks)
+        {
             System.out.format(CriticalPath.format, (Object[]) t.toStringArray());
+            tss.add(t);
+
+
+//        	taskNames.add((t.name).toString());
+//        	ES.add((t.earlyStart));
+//        	EF.add((t.earlyFinish));
+//        	LS.add((t.latestStart));
+//        	LF.add((t.latestFinish));
+//        	System.out.println((Object[]) t.toStringArray());
+        }
+
+        for(int i=0;i<tss.size();i++){
+            System.out.println("Name: "+tss.get(i).name);
+        }
+//    	System.out.println(tss);
     }
+
 }
+
+//System.out.println(taskNames+"\n"+ES+"\n"+EF+"\n"+LS+"\n"+LF);
+
+
+
+//    public static void printResult(Task[] tasks){
+//    	ArrayList <String> res = new ArrayList<String>(); 
+//    	for(Task t:tasks)
+//    	{
+//    		res.toArray((Object[])t.toStringArray());
+//    	}
+//    	System.out.println(res);
+//    }
+//}

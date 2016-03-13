@@ -136,7 +136,18 @@ public class AddProjectActivity extends AppCompatActivity {
 //        taskInfo.put("projectName", projectName);
 //        taskInfo.saveInBackground();
 
+
 //        refreshPage();
+//        Intent intent = new Intent(getApplicationContext(),AddTasksActivity.class);
+//        intent.putExtra("projectName",projectName);
+//        startActivity(intent);
+
+//        Intent intent = new Intent(getApplicationContext(),AddTasksActivity.class);
+//        intent.putExtra("projectName",projectName);
+//        startActivity(intent);
+
+
+        //refreshPage();
     }
 
     public void refreshPage(){
